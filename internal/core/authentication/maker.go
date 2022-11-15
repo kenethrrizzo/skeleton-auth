@@ -30,7 +30,7 @@ func NewJWTMaker(secretKey string) (Maker, error) {
 }
 
 func (maker *JWTMaker) CreateToken(username string, duration time.Duration) (string, error) {
-    payload, err := NewPayload(username, duration)
+	payload, err := NewPayload(username, duration)
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +50,7 @@ func (maker *JWTMaker) VerifyToken(token string) (*Payload, error) {
 		return []byte(maker.secretKey), nil
 	}
 
-	jwtToken, err := jwt.ParseWithClaims(token, &Payload{}, keyFunc)	
+	jwtToken, err := jwt.ParseWithClaims(token, &Payload{}, keyFunc)
 	if err != nil {
 		verr, ok := err.(*jwt.ValidationError)
 		if ok && errors.Is(verr.Inner, domainErrors.ErrExpiredToken) {
